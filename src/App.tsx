@@ -1,19 +1,65 @@
-import React from "react";
+import React, { useEffect, useRef } from "react";
 import "./index.css";
 
 export default function App() {
+  useEffect(() => {
+    window.scrollTo(0, 0); //this ensure page is auto scrolled to top during launch, if you find another way to complete this, then that is fine too.
+  }, []);
+
+  // ref for the footer animation
+  const footerRef = useRef(null);
+
+  // observing the footer 
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("fade-up-visible");
+            observer.unobserve(entry.target);
+          }
+        });
+      },
+      {
+        threshold: 0.1, 
+        rootMargin: "0px 0px -20px 0px" // this will adjust timing of the footer scroll down. The higher the negative value is, the more you have to scroll down to be in view.
+      }
+    );
+
+    
+    const setupObserver = () => {
+      if (footerRef.current) {
+        observer.observe(footerRef.current);
+      }
+    };
+
+    // main observer
+    setupObserver();
+    
+    // delayed oberver as a backup
+    const timer = setTimeout(setupObserver, 100);
+
+    return () => {
+      clearTimeout(timer);
+      if (footerRef.current) {
+        observer.unobserve(footerRef.current);
+      }
+    };
+  }, []);
+
+  
   return (
     <div className="min-h-screen bg-gray-100 p-6">
-      <div className="max-w-4xl mx-auto text-center">
-  <img
-    src="/assets/mediconnect.png"
-    alt="App Logo"
-    className="w-[400px] mx-auto mb-4 shadow-none bg-transparent"
-  />
-  <h1 className="text-4xl font-bold mb-4">MediConnect</h1>
-  <p className="text-lg text-gray-600 mb-6">
-  Our mobile medical app empowers patients to seamlessly connect with doctors and pharmacies, book appointments, and manage their healthcare from one convenient platform.
-  </p>
+      <div className="max-w-4xl mx-auto text-center fade-up">
+        <img
+          src="/assets/mediconnect.png"
+          alt="App Logo"
+          className="w-[400px] mx-auto mb-4 shadow-none bg-transparent"
+        />
+        <h1 className="text-4xl font-bold mb-4">MediConnect</h1>
+        <p className="text-lg text-gray-600 mb-6">
+          Our mobile medical app empowers patients to seamlessly connect with doctors and pharmacies, book appointments, and manage their healthcare from one convenient platform.
+        </p>
         <div className="flex justify-center gap-4 mb-8">
           <a
             href="https://github.com/tahirh9903/firebase-auth-tutorial"
@@ -65,7 +111,12 @@ export default function App() {
           </ul>
         </div>
 
-        <footer className="mt-10 text-gray-500 text-sm">
+      
+        <div style={{ height: "25px" }}></div> 
+        <footer 
+          ref={footerRef} 
+          className="mt-10 text-gray-500 text-sm scroll-fade-up" 
+        >
           &copy; {new Date().getFullYear()} MediConnect. Built for our senior project.
         </footer>
       </div>
