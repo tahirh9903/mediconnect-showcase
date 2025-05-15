@@ -11,6 +11,8 @@ export default function App() {
   // tracking slide effect
   const [isOverscrolling, setIsOverscrolling] = useState(false);
   const [overscrollDirection, setOverscrollDirection] = useState(null); 
+
+  const [expandedMember, setExpandedMember] = useState(null);
   
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -104,23 +106,66 @@ export default function App() {
       : 'slide-from-bottom'
     : '';
 
+
+  // expanded state for team member
+  const toggleMember = (name) => {
+    if (expandedMember === name) {
+      setExpandedMember(null);
+    } else {
+      setExpandedMember(name);
+    }
+  };
+  
+    // team members data details
+  const teamMembers = [
+    {
+      name: "Tahir Hossain",
+      points: [
+        "Upcoming graduate at NYIT with a strong interest in full stack software engineering, DevOps, and scalable system design. I’ve created and contributed to projects where I developed and maintained web applications using React, Node.js, and Firebase, while also setting up CI/CD pipelines with GitHub Actions to streamline testing and deployment. I’m passionate about building efficient, user-friendly applications and aim to pursue a career in software engineering that bridges development and deployment through modern DevOps practices."
+      ]
+    },
+    {
+      name: "Muntashir Hossain",
+      points: [
+        "Upcoming graduate at NYIT with a strong interest in front-end development, mobile applications, and user experience design. I have experience working on cross-platform mobile apps using React Native and improved UI responsiveness across devices. I’m passionate about building intuitive, visually appealing interfaces and plan to pursue a career focused on front-end engineering and mobile-first application development."
+      ]
+    },
+    {
+      name: "Sadman Shipar",
+      points: [
+        "A senior Computer Science student at NYIT in the 4+1 program, with a strong interest in cybersecurity, cloud computing, and software development. I’ve interned twice at Constellation, where I worked on vulnerability management and application security using tools like Tenable and Wireshark."
+      ]
+    },
+    {
+      name: "Mohammed Tanjid",
+      points: [
+        "Upcoming graduate at NYIT with a strong interest in systems administration, networking, and IT support. I’ve interned at WebMD, where I managed user accounts, configured network hardware, and supported cloud-based infrastructure using tools like Active Directory and AWS. I’m passionate about keeping systems running efficiently and securely, and I aim to pursue a career in IT operations, infrastructure management, and cloud services."
+      ]
+    },
+    {
+      name: "Rajansher Khera",
+      points: [
+        "Upcoming graduate at NYIT with a strong interest in databases, data engineering, and backend development. I enjoy working on optimizing SQL queries, managing ETL pipelines, and designing relational schemas for enterprise reporting."
+      ]
+    }
+  ];
   
     return (
-      <div 
-        ref={containerRef}
-        className={`min-h-screen bg-gray-100 p-6 ${slideClass}`}
-      >
-        <div className="max-w-4xl mx-auto text-center fade-up">
-          <img
-            src="/assets/mediconnect.png"
-            alt="App Logo"
-            className="w-[400px] mx-auto mb-4 shadow-none bg-transparent"
-          />
-          <h1 className="text-4xl font-bold mb-4">MediConnect</h1>
-          <p className="text-lg text-gray-600 mb-6">
-            Our mobile medical app empowers patients to seamlessly connect with doctors and pharmacies, book appointments, and manage their healthcare from one convenient platform.
-          </p>
-          <div className="flex justify-center gap-4 mb-8">
+    <div 
+      ref={containerRef}
+      className={`min-h-screen bg-gray-100 p-6 ${slideClass}`}
+    >
+      <div className="max-w-4xl mx-auto text-center fade-up">
+        <img
+          src="/assets/mediconnect.png"
+          alt="App Logo"
+          className="w-[400px] mx-auto mb-4 shadow-none bg-transparent"
+        />
+        <h1 className="text-4xl font-bold mb-4">MediConnect</h1>
+        <p className="text-lg text-gray-600 mb-6">
+          Our mobile medical app empowers patients to seamlessly connect with doctors and pharmacies, book appointments, and manage their healthcare from one convenient platform.
+        </p>
+        <div className="flex justify-center gap-4 mb-8">
           <a
             href="https://github.com/tahirh9903/firebase-auth-tutorial"
             target="_blank"
@@ -172,11 +217,40 @@ export default function App() {
         >
           <h2 className="text-xl font-semibold mb-2">Team</h2>
           <ul className="text-gray-700">
-            <li><strong>Tahir Hossain</strong></li>
-            <li><strong>Muntashir Hossain</strong></li>
-            <li><strong>Sadman Shipar</strong></li>
-            <li><strong>Mohammed Tanjid</strong></li>
-            <li><strong>Rajansher Khera</strong></li>
+            {teamMembers.map((member, index) => (
+              <li key={index} className="mb-2">
+                <div className="flex items-center justify-center">
+                  <strong>{member.name}</strong>
+                  <button 
+                    onClick={() => toggleMember(member.name)}
+                    className="ml-2 focus:outline-none transition-transform duration-300 ease-in-out"
+                    aria-label={`Toggle details for ${member.name}`}
+                  >
+                    <svg 
+                      xmlns="http://www.w3.org/2000/svg" 
+                      width="16" 
+                      height="16" 
+                      viewBox="0 0 24 24" 
+                      fill="none" 
+                      stroke="currentColor" 
+                      strokeWidth="2" 
+                      strokeLinecap="round" 
+                      strokeLinejoin="round"
+                      className={`transform ${expandedMember === member.name ? 'rotate-180' : ''}`}
+                    >
+                      <polyline points="6 9 12 15 18 9"></polyline>
+                    </svg>
+                  </button>
+                </div>
+                {expandedMember === member.name && (
+                  <div className="mt-2 px-4 py-2 bg-gray-50 rounded-lg text-center animate-dropdown">
+                    <p className="text-sm text-gray-700">
+                      {member.points.join(' ')}
+                    </p>
+                  </div>
+                )}
+              </li>
+            ))}
           </ul>
         </div>
         
