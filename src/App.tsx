@@ -1,5 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import "./index.css";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faGoogleDrive, faGithub } from '@fortawesome/free-brands-svg-icons';
 
 export default function App() {
   // tracking all elements viewability
@@ -26,7 +28,7 @@ export default function App() {
   const containerRef = useRef(null);
 
   useEffect(() => {
-    let overscrollTimeout = null;
+    let overscrollTimeout: number | null = null;
     
     const checkElementVisibility = (element, setVisibleFn) => {
       if (element) {
@@ -48,7 +50,7 @@ export default function App() {
         setOverscrollDirection('top');
         
         if (overscrollTimeout) clearTimeout(overscrollTimeout);
-        overscrollTimeout = setTimeout(() => {
+        overscrollTimeout = window.setTimeout(() => {
           setIsOverscrolling(false);
         }, 800);
       }
@@ -59,7 +61,7 @@ export default function App() {
         setOverscrollDirection('bottom');
         
         if (overscrollTimeout) clearTimeout(overscrollTimeout);
-        overscrollTimeout = setTimeout(() => {
+        overscrollTimeout = window.setTimeout(() => {
           setIsOverscrolling(false);
         }, 800); 
       }
@@ -81,7 +83,7 @@ export default function App() {
           setOverscrollDirection('bottom');
           
           if (overscrollTimeout) clearTimeout(overscrollTimeout);
-          overscrollTimeout = setTimeout(() => {
+          overscrollTimeout = window.setTimeout(() => {
             setIsOverscrolling(false);
           }, 800);
         }
@@ -121,25 +123,25 @@ export default function App() {
     {
       name: "Tahir Hossain",
       points: [
-        "Upcoming graduate at NYIT with a strong interest in full stack software engineering, DevOps, and scalable system design. I’ve created and contributed to projects where I developed and maintained web applications using React, Node.js, and Firebase, while also setting up CI/CD pipelines with GitHub Actions to streamline testing and deployment. I’m passionate about building efficient, user-friendly applications and aim to pursue a career in software engineering that bridges development and deployment through modern DevOps practices."
+        "Upcoming graduate at NYIT with a strong interest in full stack software engineering, DevOps, and scalable system design. I've created and contributed to projects where I developed and maintained web applications using React, Node.js, and Firebase, while also setting up CI/CD pipelines with GitHub Actions to streamline testing and deployment. I'm passionate about building efficient, user-friendly applications and aim to pursue a career in software engineering that bridges development and deployment through modern DevOps practices."
       ]
     },
     {
       name: "Muntashir Hossain",
       points: [
-        "Upcoming graduate at NYIT with a strong interest in front-end development, mobile applications, and user experience design. I have experience working on cross-platform mobile apps using React Native and improved UI responsiveness across devices. I’m passionate about building intuitive, visually appealing interfaces and plan to pursue a career focused on front-end engineering and mobile-first application development."
+        "Upcoming graduate at NYIT with a strong interest in front-end development, mobile applications, and user experience design. I have experience working on cross-platform mobile apps using React Native and improved UI responsiveness across devices. I'm passionate about building intuitive, visually appealing interfaces and plan to pursue a career focused on front-end engineering and mobile-first application development."
       ]
     },
     {
       name: "Sadman Shipar",
       points: [
-        "A senior Computer Science student at NYIT in the 4+1 program, with a strong interest in cybersecurity, cloud computing, and software development. I’ve interned twice at Constellation, where I worked on vulnerability management and application security using tools like Tenable and Wireshark."
+        "A senior Computer Science student at NYIT in the 4+1 program, with a strong interest in cybersecurity, cloud computing, and software development. I've interned twice at Constellation, where I worked on vulnerability management and application security using tools like Tenable and Wireshark."
       ]
     },
     {
       name: "Mohammed Tanjid",
       points: [
-        "Upcoming graduate at NYIT with a strong interest in systems administration, networking, and IT support. I’ve interned at WebMD, where I managed user accounts, configured network hardware, and supported cloud-based infrastructure using tools like Active Directory and AWS. I’m passionate about keeping systems running efficiently and securely, and I aim to pursue a career in IT operations, infrastructure management, and cloud services."
+        "Upcoming graduate at NYIT with a strong interest in systems administration, networking, and IT support. I've interned at WebMD, where I managed user accounts, configured network hardware, and supported cloud-based infrastructure using tools like Active Directory and AWS. I'm passionate about keeping systems running efficiently and securely, and I aim to pursue a career in IT operations, infrastructure management, and cloud services."
       ]
     },
     {
@@ -167,15 +169,34 @@ export default function App() {
         </p>
         <div className="flex justify-center gap-4 mb-8">
           <a
+            href="https://drive.google.com/drive/u/0/folders/1HCYm0l85gR7Ee0fSgYAmLszjBH3Ycd6Q"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="bg-[#4285F4] text-white px-4 py-2 rounded hover:bg-[#3367D6] flex items-center gap-2"
+          >
+            Google Drive - Semester 1
+            <FontAwesomeIcon icon={faGoogleDrive} />
+          </a>
+          <a
+            href="https://drive.google.com/drive/u/4/folders/1-UpU752NRUSEEsAvb7zSsR8MI22n7JEa"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="bg-[#4285F4] text-white px-4 py-2 rounded hover:bg-[#3367D6] flex items-center gap-2"
+          >
+            Google Drive - Semester 2
+            <FontAwesomeIcon icon={faGoogleDrive} />
+          </a>
+          <a
             href="https://github.com/tahirh9903/firebase-auth-tutorial"
             target="_blank"
             rel="noopener noreferrer"
-            className="bg-black text-white px-4 py-2 rounded hover:bg-gray-800"
+            className="bg-black text-white px-4 py-2 rounded hover:bg-gray-800 flex items-center gap-2"
           >
             GitHub
+            <FontAwesomeIcon icon={faGithub} />
           </a>
           <a
-            href="https://your-app-demo-link.com"
+            href="https://drive.google.com/file/d/13S9sUs9otlwbIvc_SwNe5EzZc1bIKB65/view?t=2"
             target="_blank"
             rel="noopener noreferrer"
             className="border border-black px-4 py-2 rounded hover:bg-gray-200"
